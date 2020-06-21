@@ -1,5 +1,7 @@
 package contacts;
 
+import java.io.IOException;
+
 public abstract class Contact {
     private String phoneNumber = "";
     private String name;
@@ -22,17 +24,7 @@ public abstract class Contact {
         }
     }
 
-    public boolean isPerson() {
-        return this instanceof Person;
-    }
-
-    public boolean hasNumber() {
-        return !phoneNumber.equals("");
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+    public abstract void editContact() throws IOException;
 
     public String getName() {
         return name;
@@ -45,4 +37,19 @@ public abstract class Contact {
     public void setPhoneNumber(String phoneNumber) {
         checkNumber(phoneNumber);
     }
+
+    public abstract void showInfo();
+
+    public boolean isPerson() {
+        return this instanceof Person;
+    }
+
+    public boolean hasNumber() {
+        return !phoneNumber.equals("");
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
 }

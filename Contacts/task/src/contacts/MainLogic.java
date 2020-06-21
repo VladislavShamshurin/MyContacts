@@ -3,19 +3,18 @@ package contacts;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainLogic {
     public static final List<Contact> contacts = new ArrayList<>();
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
     public void selectAction() {
         boolean isExit = false;
         while(!isExit) {
             try {
-                System.out.println("Enter action (add, remove, edit, count, info, exit): ");
+                System.out.println("[menu] Enter action (add, list, search, count, exit): ");
                 String answer = bufferedReader.readLine();
                 switch (answer.toLowerCase()) {
                     case "add":
@@ -36,7 +35,7 @@ public class MainLogic {
                     case "count":
                         System.out.println("The Phone Book has " + contacts.size() +  " records.");
                         break;
-                    case "info":
+                    case "list":
                         info();
                         break;
                     case "exit":
@@ -58,30 +57,7 @@ public class MainLogic {
         showList();
         System.out.println("Enter index to show info: ");
         try {
-            int index = Integer.parseInt(bufferedReader.readLine()) - 1;
-            if (contacts.get(index).isPerson()) {
-                Person person = (Person) contacts.get(index);
-                System.out.println("Name: " + person.getName());
-                System.out.println("Surname: " + person.getSurname());
-                if (person.birthday.toString().equals("1000-10-10")) {
-                    System.out.println("Birth date: [no data]");
-                } else {
-                    System.out.println("Birth date: " + person.birthday);
-                }
-                System.out.println("Gender: " + person.getGender());
-                System.out.println("Number: " + person.getPhoneNumber());
-                System.out.println("Time created: " + person.createDate);
-                System.out.println("Time last edit: " + person.getLastEdit());
-                System.out.println();
-            } else {
-                Organization organization = (Organization) contacts.get(index);
-                System.out.println("Organization name: " + organization.getName());
-                System.out.println("Address: " + organization.getAddress());
-                System.out.println("Number: " + organization.getPhoneNumber());
-                System.out.println("Time created: " + organization.createDate);
-                System.out.println("Time last edit: " + organization.getLastEdit());
-                System.out.println();
-            }
+            contacts.get(Integer.parseInt(bufferedReader.readLine()) - 1).showInfo();
         } catch (NumberFormatException e) {
             e.getMessage();
         }
@@ -89,93 +65,7 @@ public class MainLogic {
 
     public void editContact() throws IOException {
         System.out.println("Select a record: ");
-        int choose1 = Integer.parseInt(bufferedReader.readLine()) - 1;
-        if (contacts.get(choose1).isPerson()) {
-            Person person = (Person) contacts.get(choose1);
-            System.out.println("Select a field (name, surname, birth, gender, number): ");
-            String field = bufferedReader.readLine();
-            //@field edit name, surname, number.@
-            switch (field.toLowerCase()) {
-                case "name":
-                    System.out.println("Enter name: ");
-                    String newName = bufferedReader.readLine();
-                    person.setName(newName);
-                    System.out.println("The record updated!");
-                    System.out.println();
-                    person.setLastEdit(LocalDateTime.now());
-                    break;
-                case "surname":
-                    System.out.println("Enter surname: ");
-                    String newSurname = bufferedReader.readLine();
-                    person.setSurname(newSurname);
-                    System.out.println("The record updated!");
-                    System.out.println();
-                    person.setLastEdit(LocalDateTime.now());
-                    break;
-                case "number":
-                    System.out.println("Enter number: ");
-                    String newNumber = bufferedReader.readLine();
-                    person.setPhoneNumber(newNumber);
-                    System.out.println("The record updated!");
-                    System.out.println();
-                    person.setLastEdit(LocalDateTime.now());
-                    break;
-                case "birth":
-                    System.out.println("Enter birth: ");
-                    String newBirth = bufferedReader.readLine();
-                    if (newBirth.equals("") || newBirth.length() < 9) {
-                        System.out.println("Bad birth date!");
-                        newBirth = "1000-10-10";
-                    }
-                    person.setBirthday(newBirth);
-                    System.out.println("The record updated!");
-                    System.out.println();
-                    person.setLastEdit(LocalDateTime.now());
-                    break;
-                case "gender":
-                    System.out.println("Enter gender: ");
-                    String newGender = bufferedReader.readLine().toUpperCase();
-                    if (!newGender.equals("M") && !newGender.equals("F")) {
-                        System.out.println("Bad gender!");
-                        newGender = "[no data]";
-                    }
-                    person.setGender(newGender);
-                    System.out.println("The record updated!");
-                    System.out.println();
-                    person.setLastEdit(LocalDateTime.now());
-                    break;
-            }
-        } else {
-            Organization organization = (Organization) contacts.get(choose1);
-            System.out.println("Select a field (name, address, number): ");
-            String field = bufferedReader.readLine();
-            switch (field.toLowerCase()) {
-                case "name":
-                    System.out.println("Enter name: ");
-                    String newName = bufferedReader.readLine();
-                    organization.setName(newName);
-                    System.out.println("The record updated!");
-                    System.out.println();
-                    organization.setLastEdit(LocalDateTime.now());
-                    break;
-                case "address":
-                    System.out.println("Enter address: ");
-                    String newAddress = bufferedReader.readLine();
-                    organization.setAddress(newAddress);
-                    System.out.println("The record updated!");
-                    System.out.println();
-                    organization.setLastEdit(LocalDateTime.now());
-                    break;
-                case "number":
-                    System.out.println("Enter number: ");
-                    String newNumber = bufferedReader.readLine();
-                    organization.setPhoneNumber(newNumber);
-                    System.out.println("The record updated!");
-                    System.out.println();
-                    organization.setLastEdit(LocalDateTime.now());
-                    break;
-            }
-        }
+        contacts.get(Integer.parseInt(bufferedReader.readLine()) - 1).editContact();
     }
 
     public void addContact() throws IOException {
