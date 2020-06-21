@@ -24,7 +24,11 @@ public abstract class Contact {
         }
     }
 
+    public abstract String getFullName();
+
     public abstract void editContact() throws IOException;
+
+    public abstract void showInfo();
 
     public String getName() {
         return name;
@@ -37,8 +41,6 @@ public abstract class Contact {
     public void setPhoneNumber(String phoneNumber) {
         checkNumber(phoneNumber);
     }
-
-    public abstract void showInfo();
 
     public boolean isPerson() {
         return this instanceof Person;

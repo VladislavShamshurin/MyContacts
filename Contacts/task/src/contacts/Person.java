@@ -77,6 +77,30 @@ public class Person extends Contact {
         }
     }
 
+    public static void addContact() throws IOException {
+        System.out.println("Enter the name: ");
+        String perName = MainLogic.bufferedReader.readLine();
+        System.out.println("Enter the surname: ");
+        String perSurname = MainLogic.bufferedReader.readLine();
+        System.out.println("Enter the birth date: ");
+        String perDate = MainLogic.bufferedReader.readLine();
+        if (perDate.equals("") || perDate.length() < 9) {
+            System.out.println("Bad birth date!");
+            perDate = "1000-10-10";
+        }
+        System.out.println("Enter the gender (M, F): ");
+        String gender = MainLogic.bufferedReader.readLine().toUpperCase();
+        if (!gender.equals("M") && !gender.equals("F")) {
+            System.out.println("Bad gender!");
+            gender = "[no data]";
+        }
+        System.out.println("Enter the number: ");
+        String perPhoneNumber = MainLogic.bufferedReader.readLine();
+        MainLogic.contacts.add(new Person(perPhoneNumber, perName, perSurname, perDate, gender));
+        System.out.println("The record added.");
+        System.out.println();
+    }
+
     @Override
     public void showInfo() {
         System.out.println("Name: " + getName());
@@ -98,6 +122,10 @@ public class Person extends Contact {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getFullName() {
+        return getName() + " " + surname;
     }
 
     public String getSurname() {

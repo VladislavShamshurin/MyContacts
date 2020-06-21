@@ -10,9 +10,20 @@ public class Organization extends Contact {
 
     public Organization(String phoneNumber, String name, String address) {
         super(phoneNumber, name);
-        createDate = LocalDateTime.now();
-        lastEdit = createDate;
         this.address = address;
+        this.createDate = LocalDateTime.now();
+        this.lastEdit = this.createDate;
+    }
+
+   public static void addContact() throws IOException {
+        System.out.println("[Add] Enter the organization name: ");
+        String orgName = MainLogic.bufferedReader.readLine();
+        System.out.println("[Add] Enter the address: ");
+        String orgAddress = MainLogic.bufferedReader.readLine();
+        System.out.println("[Add] Enter the number: ");
+        String orgNumber = MainLogic.bufferedReader.readLine();
+        MainLogic.contacts.add(new Organization(orgNumber, orgName, orgAddress));
+        System.out.println("The record added.\n");
     }
 
     @Override
@@ -24,7 +35,7 @@ public class Organization extends Contact {
                 System.out.println("Enter name: ");
                 String newName = MainLogic.bufferedReader.readLine();
                 setName(newName);
-                System.out.println("The record updated!");
+                System.out.println("Saved");
                 setLastEdit(LocalDateTime.now());
                 System.out.println();
                 break;
@@ -32,7 +43,7 @@ public class Organization extends Contact {
                 System.out.println("Enter address: ");
                 String newAddress = MainLogic.bufferedReader.readLine();
                 setAddress(newAddress);
-                System.out.println("The record updated!");
+                System.out.println("Saved");
                 setLastEdit(LocalDateTime.now());
                 System.out.println();
                 break;
@@ -40,7 +51,7 @@ public class Organization extends Contact {
                 System.out.println("Enter number: ");
                 String newNumber = MainLogic.bufferedReader.readLine();
                 setPhoneNumber(newNumber);
-                System.out.println("The record updated!");
+                System.out.println("Saved");
                 setLastEdit(LocalDateTime.now());
                 System.out.println();
                 break;
@@ -56,6 +67,10 @@ public class Organization extends Contact {
         System.out.println("Time last edit: " + getLastEdit() + "\n");
     }
 
+    @Override
+    public String getFullName() {
+        return getName();
+    }
 
     public LocalDateTime getCreateDate() {
         return createDate;
