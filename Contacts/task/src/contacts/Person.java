@@ -30,7 +30,7 @@ public class Person extends Contact {
                 System.out.println("Enter name: ");
                 String newName = MainLogic.bufferedReader.readLine();
                 setName(newName);
-                System.out.println("The record updated!");
+                System.out.println("Saved");
                 System.out.println();
                 setLastEdit(LocalDateTime.now());
                 break;
@@ -38,7 +38,7 @@ public class Person extends Contact {
                 System.out.println("Enter surname: ");
                 String newSurname = MainLogic.bufferedReader.readLine();
                 setSurname(newSurname);
-                System.out.println("The record updated!");
+                System.out.println("Saved");
                 System.out.println();
                 setLastEdit(LocalDateTime.now());
                 break;
@@ -46,7 +46,7 @@ public class Person extends Contact {
                 System.out.println("Enter number: ");
                 String newNumber = MainLogic.bufferedReader.readLine();
                 setPhoneNumber(newNumber);
-                System.out.println("The record updated!");
+                System.out.println("Saved");
                 System.out.println();
                 setLastEdit(LocalDateTime.now());
                 break;
@@ -58,7 +58,7 @@ public class Person extends Contact {
                     newBirth = "1000-10-10";
                 }
                 setBirthday(newBirth);
-                System.out.println("The record updated!");
+                System.out.println("Saved");
                 System.out.println();
                 setLastEdit(LocalDateTime.now());
                 break;
@@ -70,7 +70,7 @@ public class Person extends Contact {
                     newGender = "[no data]";
                 }
                 setGender(newGender);
-                System.out.println("The record updated!");
+                System.out.println("Saved");
                 System.out.println();
                 setLastEdit(LocalDateTime.now());
                 break;
@@ -103,6 +103,8 @@ public class Person extends Contact {
 
     @Override
     public void showInfo() {
+        String[] dateCreate = getCreateDate().toString().split("\\.");
+        String[] dateLastEdit = getLastEdit().toString().split("\\.");
         System.out.println("Name: " + getName());
         System.out.println("Surname: " + getSurname());
         if (birthday.toString().equals("1000-10-10")) {
@@ -112,8 +114,8 @@ public class Person extends Contact {
         }
         System.out.println("Gender: " + getGender());
         System.out.println("Number: " + getPhoneNumber());
-        System.out.println("Time created: " + getCreateDate());
-        System.out.println("Time last edit: " + getLastEdit() + "\n");
+        System.out.println("Time created: " + new StringBuilder(dateCreate[0]).delete(16, 19));
+        System.out.println("Time last edit: " + new StringBuilder(dateLastEdit[0]).delete(16, 19) + "\n");
     }
 
     public String getGender() {

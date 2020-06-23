@@ -11,7 +11,7 @@ public class MainLogic {
     static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
     public void selectAction() {
-        System.out.println("open phonebook.db\n");
+        System.out.println("open phonebook.db");
         boolean isExit = false;
         while(!isExit) {
             try {
@@ -25,8 +25,12 @@ public class MainLogic {
                         System.out.println("The Phone Book has " + contacts.size() +  " records.");
                         break;
                     case "list":
-                        info();
-                        break;
+                        if (contacts.size() != 0) {
+                            list();
+                            break;
+                        } else {
+                            System.out.println("Records not added!");
+                        }
                     case "exit":
                         isExit = true;
                         bufferedReader.close();
@@ -58,42 +62,59 @@ public class MainLogic {
                     count++;
                 }
             }
-            System.out.println("\n[search] Enter action ([number], back, again): ");
-            String choose = bufferedReader.readLine().toLowerCase().toLowerCase();
-            if (choose.equals("back")) {
-                return;
-            } else if (choose.equals("again")) {
-                search();
-            } else {
-                try {
-                    contacts.get(Integer.parseInt(choose) - 1).showInfo();
-                    System.out.println("[record] Enter action (edit, delete, menu): ");
-                    String select = bufferedReader.readLine().toLowerCase();
-                    if (select.equals("edit")) {
-                        editContact(Integer.parseInt(choose) - 1);
-                    } else if (select.equals("delete")) {
-                        removeContact(Integer.parseInt(choose) - 1);
-                    } else {
-                        return;
-                    }
-                } catch (IndexOutOfBoundsException | NumberFormatException e) {
-                    System.out.println("Error!");
-                }
-            }
+            searchAction();
     }
 
-    public void info() throws IOException {
-        showList();
-        System.out.println("Enter index to show info: ");
-        try {
-            contacts.get(Integer.parseInt(bufferedReader.readLine()) - 1).showInfo();
-        } catch (NumberFormatException e) {
-            e.getMessage();
+    public void searchAction() throws IOException {
+        System.out.println("\n[search] Enter action ([number], back, again): ");
+        String choose = bufferedReader.readLine().toLowerCase();
+        if (choose.equals("back")) {} else if (choose.equals("again")) {
+            search();
+        } else {
+            try {
+                contacts.get(Integer.parseInt(choose) - 1).showInfo();
+                recordAction(Integer.parseInt(choose) - 1);
+            } catch (IndexOutOfBoundsException | NumberFormatException e) {
+                System.out.println("Error!");
+            }
         }
     }
 
-    public void editContact(int choose) throws IOException {
-        contacts.get(choose).editContact();
+    public void recordAction(int index) throws IOException {
+        System.out.println("[record] Enter action (edit, delete, menu): ");
+        String select = bufferedReader.readLine().toLowerCase();
+        if (select.equals("edit")) {
+            editContact(index);
+        } else if (select.equals("delete")) {
+            removeContact(index);
+        }
+    }
+
+    public void list() throws IOException {
+        showList();
+        System.out.println("[list] Enter action ([number], back): ");
+        String choose = bufferedReader.readLine().toLowerCase();
+        if (choose.equals("back")) {} else {
+            try {
+                int index = Integer.parseInt(choose) - 1;
+                info(index);
+                recordAction(index);
+            } catch (IndexOutOfBoundsException | NumberFormatException e) {
+                System.out.println("Error!");
+            }
+        }
+    }
+
+    public void info(int index) {
+        try {
+            contacts.get(index).showInfo();
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
+            System.out.println("Error!");
+        }
+    }
+
+    public void editContact(int index) throws IOException {
+        contacts.get(index).editContact();
     }
 
     public void addContact() throws IOException {
@@ -111,8 +132,8 @@ public class MainLogic {
         }
     }
 
-    public void removeContact(int choose) {
-        contacts.remove(choose);
+    public void removeContact(int index) {
+        contacts.remove(index);
         System.out.println("The record removed!");
     }
 
@@ -123,5 +144,6 @@ public class MainLogic {
                 System.out.println(i + ". " + contact.getFullName());
                 i++;
         }
+        System.out.println();
     }
 }

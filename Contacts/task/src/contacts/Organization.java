@@ -16,11 +16,11 @@ public class Organization extends Contact {
     }
 
    public static void addContact() throws IOException {
-        System.out.println("[Add] Enter the organization name: ");
+        System.out.println("Enter the organization name: ");
         String orgName = MainLogic.bufferedReader.readLine();
-        System.out.println("[Add] Enter the address: ");
+        System.out.println("Enter the address: ");
         String orgAddress = MainLogic.bufferedReader.readLine();
-        System.out.println("[Add] Enter the number: ");
+        System.out.println("Enter the number: ");
         String orgNumber = MainLogic.bufferedReader.readLine();
         MainLogic.contacts.add(new Organization(orgNumber, orgName, orgAddress));
         System.out.println("The record added.\n");
@@ -60,11 +60,13 @@ public class Organization extends Contact {
 
     @Override
     public void showInfo() {
+        String[] dateCreate = getCreateDate().toString().split("\\.");
+        String[] dateLastEdit = getLastEdit().toString().split("\\.");
         System.out.println(String.format("Organization name: %s\n" +
                 "Address: %s\n" +
                 "Number: %s", getName(), getAddress(), getPhoneNumber()));
-        System.out.println("Time created: " + getCreateDate());
-        System.out.println("Time last edit: " + getLastEdit() + "\n");
+        System.out.println("Time created: " + new StringBuilder(dateCreate[0]).delete(16, 19));
+        System.out.println("Time last edit: " + new StringBuilder(dateLastEdit[0]).delete(16, 19) + "\n");
     }
 
     @Override
