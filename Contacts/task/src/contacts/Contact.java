@@ -12,8 +12,9 @@ public abstract class Contact {
     }
 
     private void checkNumber(String phoneNumber) {
-        if (phoneNumber.matches(RegexContact.firstRegexNumber) || phoneNumber.matches(RegexContact.secondRegexNumber)
-        || phoneNumber.matches(RegexContact.thirdRegexNumber)) {
+        if (phoneNumber.matches(RegexContact.firstRegexNumber)
+                || phoneNumber.matches(RegexContact.secondRegexNumber)
+                || phoneNumber.matches(RegexContact.thirdRegexNumber)) {
             this.phoneNumber = phoneNumber;
         } else {
             this.phoneNumber = "";

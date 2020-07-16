@@ -51,7 +51,7 @@ public class Person extends Contact {
                 setLastEdit(LocalDateTime.now());
                 break;
             case "birth":
-                System.out.println("Enter birth: ");
+                System.out.println("Enter birth [YYYY-MM-dd]:");
                 String newBirth = MainLogic.bufferedReader.readLine();
                 if (newBirth.equals("") || newBirth.length() < 9) {
                     System.out.println("Bad birth date!");
@@ -82,7 +82,7 @@ public class Person extends Contact {
         String perName = MainLogic.bufferedReader.readLine();
         System.out.println("Enter the surname: ");
         String perSurname = MainLogic.bufferedReader.readLine();
-        System.out.println("Enter the birth date: ");
+        System.out.println("Enter the birth date [YYYY-MM-dd]:");
         String perDate = MainLogic.bufferedReader.readLine();
         if (perDate.equals("") || perDate.length() < 9) {
             System.out.println("Bad birth date!");
